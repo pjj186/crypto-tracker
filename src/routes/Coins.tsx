@@ -23,9 +23,10 @@ const Coin = styled.li`
   border-radius: 15px;
   margin-bottom: 10px;
   a {
+    display: flex;
+    align-items: center;
     padding: 20px;
     transition: color 0.2s ease-in;
-    display: block;
   }
   &:hover {
     a {
@@ -41,6 +42,12 @@ const Title = styled.div`
 
 const Loader = styled.div`
   text-align: center;
+`;
+
+const Img = styled.img`
+  width: 35px;
+  height: 35px;
+  margin-right: 10px;
 `;
 
 interface CoinInterface {
@@ -64,7 +71,6 @@ const Coins = () => {
       setLoading(false);
     })(); // 즉시 바로 실행되는 함수 -> ()();
   }, []);
-  console.log(coins);
   return (
     <Container>
       <Header>
@@ -77,7 +83,18 @@ const Coins = () => {
           {coins.map((coin) => {
             return (
               <Coin key={coin.id}>
-                <Link to={`/${coin.id}`}>{coin.name} &rarr;</Link>
+                <Link
+                  to={{
+                    pathname: `/${coin.id}`,
+                    state: { name: coin.name },
+                  }}
+                >
+                  <Img
+                    alt="img"
+                    src={`https://coinicons-api.vercel.app/api/icon/${coin.symbol.toLowerCase()}`}
+                  />
+                  {coin.name} &rarr;
+                </Link>
               </Coin>
             );
           })}
