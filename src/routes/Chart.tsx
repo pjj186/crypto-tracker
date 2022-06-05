@@ -1,7 +1,6 @@
 import { useQuery } from "react-query";
 import { fetchCoinHistory } from "./api";
 import ApexChart from "react-apexcharts";
-import { transpile } from "typescript";
 
 interface IHistorical {
   time_open: string;
@@ -66,6 +65,20 @@ function Chart({ coinId }: ChartProps) {
               },
               axisBorder: {
                 show: false,
+              },
+              categories: data?.map((v) => v.time_close.substring(0, 10)),
+            },
+            fill: {
+              type: "gradient",
+              gradient: {
+                gradientToColors: ["#0be881"],
+                stops: [0, 100],
+              },
+            },
+            colors: ["#0fbcf9"],
+            tooltip: {
+              y: {
+                formatter: (value) => `$${value.toFixed(3)}`,
               },
             },
           }}
